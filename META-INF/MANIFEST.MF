@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: framework-api
+Bundle-SymbolicName: framework-api
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-15
+Automatic-Module-Name: framework.api
+Export-Package: br.com.cybersolutions.core.enums,
+ br.com.cybersolutions.core.handlers,
+ br.com.cybersolutions.core.hooks,
+ br.com.cybersolutions.core.interfaces,
+ br.com.cybersolutions.core.steps,
+ br.com.cybersolutions.core.utils,
+ br.com.cybersolutions.execute.body.request,
+ br.com.cybersolutions.execute.headers,
+ br.com.cybersolutions.execute.runners
