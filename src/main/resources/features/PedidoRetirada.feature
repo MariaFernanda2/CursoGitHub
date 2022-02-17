@@ -1435,4 +1435,4 @@ Feature: Realizar pedidos fogas retirada
     And utilizo os headers "AUTH_ENUM"
     And faço um post para "/pedido"
     And recebo a response com status 400 os dados
-      | [0].errors.message | Preço botija incorreto |
+      | [0].errors.message | erro: Preço botija incorreto |
