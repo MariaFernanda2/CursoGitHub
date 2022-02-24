@@ -14,7 +14,7 @@ import io.cucumber.junit.CucumberOptions.SnippetType;
         features = "src/main/resources/features",
         glue = {"br.com.cybersolutions.execute", "br.com.cybersolutions.core"},
 
-        tags = "@PedidoDeRetiradaSemHoraRetirada",
+        tags = "@PedidoCompletoPagamentoNoPix",
 
         snippets = SnippetType.CAMELCASE
         

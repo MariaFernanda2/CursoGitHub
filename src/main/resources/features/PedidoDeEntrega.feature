@@ -53,7 +53,25 @@ Feature: Realizar pedidos fogas entrega
     And adiciono os queryParams
       | idPedido    | {storage}VarIdPedido |
       | idOrigem    | {number}6            |
-      | idPrestador | {number}1324         |
+      | idPrestador | {number}1276         |
+      | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Acaminho             |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
       | situacao    | Concluido            |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
@@ -1367,7 +1385,7 @@ Feature: Realizar pedidos fogas entrega
       | itensPedido[0].produto               | P13                   |
       | itensPedido[0].quantidade            | {number}1             |
       | itensPedido[0].quilos                | {number}13.0          |
-      | dadosPagamento.formaPagamento        | Bala                  |
+      | dadosPagamento.formaPagamento        | Cheque                |
       | dadosFidelidade.pontosCompra         | {number}13            |
       | dadosFidelidade.quilosCompra         | {number}13            |
       | taxasDesconto.descontoFidelidade     | {number}0             |
@@ -1382,8 +1400,8 @@ Feature: Realizar pedidos fogas entrega
       | ciphertext | {storage}VarCiphertext |
     And utilizo os headers "AUTH_ENUM"
     And faço um post para "/pedido"
-    And recebo a response com status 200 os dados
-      | errors[0].message | Valor do campo inválido, exemplo: Dinheiro,CartaoNoAplicativo,MaquinetaCredito,MaquinetaDebito |
+    And recebo a response com status 400 os dados
+      | errors[0].message | Valor do campo inválido, exemplo: Dinheiro,CartaoNoAplicativo,MaquinetaCredito,MaquinetaDebito,Pix |
 
   @PedidoDeEntregaRevendaFechadaHorario
   Scenario: Pedido de entrega com revenda fechada pelo horário
@@ -1682,9 +1700,26 @@ Feature: Realizar pedidos fogas entrega
     And adiciono os queryParams
       | idPedido    | {storage}VarIdPedido |
       | idOrigem    | {number}6            |
-      | idPrestador | {number}1324         |
-      | tipoEntrega | ESTOQUE_FOGASLOG     |
+      | idPrestador | {number}1276         |
       | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Acaminho             |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Concluido            |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
 
@@ -1740,9 +1775,26 @@ Feature: Realizar pedidos fogas entrega
     And adiciono os queryParams
       | idPedido    | {storage}VarIdPedido |
       | idOrigem    | {number}6            |
-      | idPrestador | {number}1324         |
-      | tipoEntrega | ENTREGADOR_PROPRIO   |
+      | idPrestador | {number}1276         |
       | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Acaminho             |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Concluido            |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
 
@@ -2188,3 +2240,49 @@ Feature: Realizar pedidos fogas entrega
     And faço um post para "/pedido"
     And recebo a response com status 400 os dados
       | [0].errors.message | Preço botija incorreto |
+
+  @PedidoEntregaPixRevendaNaoAceita
+  Scenario: Pedido de entrega pagamento no PIX para revenda que não aceita
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false           |
+      | dadosCliente.idCliente               | {number}335644        |
+      | dadosCliente.idEndereco              | {number}327567        |
+      | dadosCliente.latitude                | {number}-3.3465345    |
+      | dadosCliente.longitude               | {number}-60.345236    |
+      | dadosCliente.telefoneCliente         | 11942391453           |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3           |
+      | dadosRevenda.nomeRevenda             | Revenda Antonio Teste |
+      | dadosRevenda.revendaEscolhida        | {number}108598        |
+      | dadosPedido.retiradaNaRevenda        | false                 |
+      | dadosPedido.tempoMinimoEntrega       | {number}15            |
+      | dadosPedido.observacao               | Gostei muito          |
+      | dadosPedido.origem                   | {number}6             |
+      | dadosPedido.recebedorPedido          | Ana maia              |
+      | dadosPedido.tempoEstimadoEntrega     | {number}15 - 30       |
+      | dadosPedido.tempoMaximoEntrega       | {number}30            |
+      | dadosPedido.tipoPedido               | PedidoGas             |
+      | dadosPedido.total                    | {number}98            |
+      | dadosPedido.troco                    | {number}0             |
+      | dadosPedido.versaoApp                | {number}4.5           |
+      | itensPedido[0].marca                 | Fogas                 |
+      | itensPedido[0].preco                 | {number}96.0          |
+      | itensPedido[0].produto               | P13                   |
+      | itensPedido[0].quantidade            | {number}1             |
+      | itensPedido[0].quilos                | {number}13.0          |
+      | dadosPagamento.formaPagamento        | Pix                   |
+      | dadosFidelidade.pontosCompra         | {number}13            |
+      | dadosFidelidade.quilosCompra         | {number}13            |
+      | taxasDesconto.descontoFidelidade     | {number}0             |
+      | taxasDesconto.taxaEntrega            | {number}2             |
+      | taxasDesconto.descontoRevenda        | {number}0.0           |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | Revenda não aceita Pix, altere a forma de pagamento |

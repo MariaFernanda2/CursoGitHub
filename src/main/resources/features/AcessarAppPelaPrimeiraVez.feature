@@ -187,9 +187,7 @@ Feature: Acessar App pela primeira vez
       | cliente.rua         | São josé dos pinhais |
       | cliente.siglaEstado | AM                   |
       | codigoRevenda       | {number}108598       |
-      | idOrigem            | {number}1            |
-      | pesquisa            | MARIA                |
-      | tipoPedido          | PEDIDO_ECONOMICO     |
+      | idOrigem            | {number}6            |
       | versaoApp           | {number}4.8.1        |
     And utilizo os headers "CLIENT_ID"
     When faço um put para "/revenda/listar"
@@ -210,12 +208,6 @@ Feature: Acessar App pela primeira vez
       | [0].idCidadeAtendimento | {number}1                           |
       | [0].cidade              | manaus                              |
       | [0].siglaEstado         | AM                                  |
-      | [0].cordaFachada        | azul                                |
-      | [0].latitude            | {number}-3.34653450F                |
-      | [0].longitude           | {number}-60.34523600F               |
-      | [0].numeroApto          | C2                                  |
-      | [0].blocoPredio         | A                                   |
-      | [0].moveuMapa           | {bool}true                          |
 
   @ListarRevendaSemIdClienteIdEndereco
   Scenario: Listar revenda sem informar IdCliente e IdEndereco

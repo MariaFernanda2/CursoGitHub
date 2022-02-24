@@ -18,9 +18,9 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.origem                   | {number}6             |
       | dadosPedido.recebedorPedido          | Ana maia              |
       | dadosPedido.tipoPedido               | PedidoGasPortaria     |
-      | dadosPedido.dataRetirada             | 2022-02-14            |
+      | dadosPedido.dataRetirada             | 2022-02-18            |
       | dadosPedido.horaRetiradaInicial      | 08:00:00              |
-      | dadosPedido.horaRetiradaFinal        | 12:00:00              |
+      | dadosPedido.horaRetiradaFinal        | 18:00:00              |
       | dadosPedido.total                    | {number}96            |
       | dadosPedido.troco                    | {number}0             |
       | dadosPedido.versaoApp                | {number}4.5           |
@@ -48,10 +48,29 @@ Feature: Realizar pedidos fogas retirada
       | VarIdPedido | idPedido |
     And espero 60000 milissegundos
     And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
       | idPedido    | {storage}VarIdPedido |
       | idOrigem    | {number}6            |
-      | idPrestador | {number}1334         |
+      | idPrestador | {number}1276         |
+      | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Acaminho             |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
       | situacao    | Concluido            |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
@@ -1022,7 +1041,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-02-29         |
+      | dadosPedido.dataRetirada             | 2022-02-19         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}96         |
@@ -1150,7 +1169,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | null               |
       | dadosPedido.total                    | {number}96         |
@@ -1193,7 +1212,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | Segunda-feira      |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}96         |
@@ -1236,9 +1255,9 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-17         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
-      | dadosPedido.horaRetiradaFinal        | 12:00:00           |
+      | dadosPedido.horaRetiradaFinal        | 18:00:00           |
       | dadosPedido.total                    | {number}186        |
       | dadosPedido.troco                    | {number}0          |
       | dadosPedido.versaoApp                | {number}4.5        |
@@ -1279,7 +1298,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}191        |
@@ -1322,7 +1341,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}186        |
@@ -1365,7 +1384,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-17         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}98         |
@@ -1409,7 +1428,7 @@ Feature: Realizar pedidos fogas retirada
       | dadosPedido.observacao               | Gostei muito       |
       | dadosPedido.origem                   | {number}6          |
       | dadosPedido.tipoPedido               | PedidoGasPortaria  |
-      | dadosPedido.dataRetirada             | 2022-12-14         |
+      | dadosPedido.dataRetirada             | 2022-02-17         |
       | dadosPedido.horaRetiradaInicial      | 08:00:00           |
       | dadosPedido.horaRetiradaFinal        | 12:00:00           |
       | dadosPedido.total                    | {number}20         |
@@ -1435,4 +1454,219 @@ Feature: Realizar pedidos fogas retirada
     And utilizo os headers "AUTH_ENUM"
     And faço um post para "/pedido"
     And recebo a response com status 400 os dados
-      | [0].errors.message | erro: Preço botija incorreto |
+      | [0].errors.message | Preço botija incorreto |
+
+  @PedidoDeRetiradaFuturoDistante
+  Scenario: Pedido de retirada informando data futuro distante
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false        |
+      | dadosCliente.idCliente               | {number}335644     |
+      | dadosCliente.idEndereco              | {number}327567     |
+      | dadosCliente.latitude                | {number}-3.3465345 |
+      | dadosCliente.longitude               | {number}-60.345236 |
+      | dadosCliente.telefoneCliente         | 11942391453        |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3        |
+      | dadosRevenda.revendaEscolhida        | {number}108598     |
+      | dadosPedido.retiradaNaRevenda        | true               |
+      | dadosPedido.observacao               | Gostei muito       |
+      | dadosPedido.origem                   | {number}6          |
+      | dadosPedido.tipoPedido               | PedidoGasPortaria  |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
+      | dadosPedido.horaRetiradaInicial      | 08:00:00           |
+      | dadosPedido.horaRetiradaFinal        | 18:00:00           |
+      | dadosPedido.total                    | {number}96         |
+      | dadosPedido.troco                    | {number}0          |
+      | dadosPedido.versaoApp                | {number}4.5        |
+      | itensPedido[0].marca                 | Fogas              |
+      | itensPedido[0].preco                 | {number}96.0       |
+      | itensPedido[0].produto               | P13                |
+      | itensPedido[0].quantidade            | {number}1          |
+      | itensPedido[0].quilos                | {number}13.0       |
+      | dadosPagamento.formaPagamento        | Dinheiro           |
+      | dadosFidelidade.pontosCompra         | {number}0          |
+      | dadosFidelidade.quilosCompra         | {number}13         |
+      | taxasDesconto.descontoFidelidade     | {number}0          |
+      | taxasDesconto.descontoRevenda        | {number}0.0        |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | A data de retirada não deve ser distante |
+
+  @PedidoDeRetiradaFormato
+  Scenario: Pedido de retirada informando data no formato YYYY/MM/DD
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false        |
+      | dadosCliente.idCliente               | {number}335644     |
+      | dadosCliente.idEndereco              | {number}327567     |
+      | dadosCliente.latitude                | {number}-3.3465345 |
+      | dadosCliente.longitude               | {number}-60.345236 |
+      | dadosCliente.telefoneCliente         | 11942391453        |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3        |
+      | dadosRevenda.revendaEscolhida        | {number}108598     |
+      | dadosPedido.retiradaNaRevenda        | true               |
+      | dadosPedido.observacao               | Gostei muito       |
+      | dadosPedido.origem                   | {number}6          |
+      | dadosPedido.tipoPedido               | PedidoGasPortaria  |
+      | dadosPedido.dataRetirada             | 2022/02/18         |
+      | dadosPedido.horaRetiradaInicial      | 08:00:00           |
+      | dadosPedido.horaRetiradaFinal        | 18:00:00           |
+      | dadosPedido.total                    | {number}96         |
+      | dadosPedido.troco                    | {number}0          |
+      | dadosPedido.versaoApp                | {number}4.5        |
+      | itensPedido[0].marca                 | Fogas              |
+      | itensPedido[0].preco                 | {number}96.0       |
+      | itensPedido[0].produto               | P13                |
+      | itensPedido[0].quantidade            | {number}1          |
+      | itensPedido[0].quilos                | {number}13.0       |
+      | dadosPagamento.formaPagamento        | Dinheiro           |
+      | dadosFidelidade.pontosCompra         | {number}0          |
+      | dadosFidelidade.quilosCompra         | {number}13         |
+      | taxasDesconto.descontoFidelidade     | {number}0          |
+      | taxasDesconto.descontoRevenda        | {number}0.0        |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | Informe uma data no formato YYYY-MM-DD |
+
+  @PedidoDeRetiradaFormatoDDMMYYYY
+  Scenario: Pedido de retirada informando data no formato dd-mm-yyyy
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false        |
+      | dadosCliente.idCliente               | {number}335644     |
+      | dadosCliente.idEndereco              | {number}327567     |
+      | dadosCliente.latitude                | {number}-3.3465345 |
+      | dadosCliente.longitude               | {number}-60.345236 |
+      | dadosCliente.telefoneCliente         | 11942391453        |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3        |
+      | dadosRevenda.revendaEscolhida        | {number}108598     |
+      | dadosPedido.retiradaNaRevenda        | true               |
+      | dadosPedido.observacao               | Gostei muito       |
+      | dadosPedido.origem                   | {number}6          |
+      | dadosPedido.tipoPedido               | PedidoGasPortaria  |
+      | dadosPedido.dataRetirada             | 18-02-2022         |
+      | dadosPedido.horaRetiradaInicial      | 08:00:00           |
+      | dadosPedido.horaRetiradaFinal        | 18:00:00           |
+      | dadosPedido.total                    | {number}96         |
+      | dadosPedido.troco                    | {number}0          |
+      | dadosPedido.versaoApp                | {number}4.5        |
+      | itensPedido[0].marca                 | Fogas              |
+      | itensPedido[0].preco                 | {number}96.0       |
+      | itensPedido[0].produto               | P13                |
+      | itensPedido[0].quantidade            | {number}1          |
+      | itensPedido[0].quilos                | {number}13.0       |
+      | dadosPagamento.formaPagamento        | Dinheiro           |
+      | dadosFidelidade.pontosCompra         | {number}0          |
+      | dadosFidelidade.quilosCompra         | {number}13         |
+      | taxasDesconto.descontoFidelidade     | {number}0          |
+      | taxasDesconto.descontoRevenda        | {number}0.0        |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | Informe uma data no formato YYYY-MM-DD |
+
+  @PedidoDeRetiradaFormatoHoras
+  Scenario: Pedido de retirada informando yyyy-mm-dd
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false        |
+      | dadosCliente.idCliente               | {number}335644     |
+      | dadosCliente.idEndereco              | {number}327567     |
+      | dadosCliente.latitude                | {number}-3.3465345 |
+      | dadosCliente.longitude               | {number}-60.345236 |
+      | dadosCliente.telefoneCliente         | 11942391453        |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3        |
+      | dadosRevenda.revendaEscolhida        | {number}108598     |
+      | dadosPedido.retiradaNaRevenda        | true               |
+      | dadosPedido.observacao               | Gostei muito       |
+      | dadosPedido.origem                   | {number}6          |
+      | dadosPedido.tipoPedido               | PedidoGasPortaria  |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
+      | dadosPedido.horaRetiradaInicial      | oito horas         |
+      | dadosPedido.horaRetiradaFinal        | dezoito horas      |
+      | dadosPedido.total                    | {number}96         |
+      | dadosPedido.troco                    | {number}0          |
+      | dadosPedido.versaoApp                | {number}4.5        |
+      | itensPedido[0].marca                 | Fogas              |
+      | itensPedido[0].preco                 | {number}96.0       |
+      | itensPedido[0].produto               | P13                |
+      | itensPedido[0].quantidade            | {number}1          |
+      | itensPedido[0].quilos                | {number}13.0       |
+      | dadosPagamento.formaPagamento        | Dinheiro           |
+      | dadosFidelidade.pontosCompra         | {number}0          |
+      | dadosFidelidade.quilosCompra         | {number}13         |
+      | taxasDesconto.descontoFidelidade     | {number}0          |
+      | taxasDesconto.descontoRevenda        | {number}0.0        |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | Informe uma data no formato YYYY-MM-DD |
+
+  @PedidoRetiradaPixRevendaNaoAceita
+  Scenario: Pedido retirada com pagamento Pix para revenda que não aceita pix
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false        |
+      | dadosCliente.idCliente               | {number}335644     |
+      | dadosCliente.idEndereco              | {number}327567     |
+      | dadosCliente.latitude                | {number}-3.3465345 |
+      | dadosCliente.longitude               | {number}-60.345236 |
+      | dadosCliente.telefoneCliente         | 11942391453        |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3        |
+      | dadosRevenda.revendaEscolhida        | {number}108598     |
+      | dadosPedido.retiradaNaRevenda        | true               |
+      | dadosPedido.observacao               | Gostei muito       |
+      | dadosPedido.origem                   | {number}6          |
+      | dadosPedido.tipoPedido               | PedidoGasPortaria  |
+      | dadosPedido.dataRetirada             | 2022-02-18         |
+      | dadosPedido.horaRetiradaInicial      | oito horas         |
+      | dadosPedido.horaRetiradaFinal        | dezoito horas      |
+      | dadosPedido.total                    | {number}96         |
+      | dadosPedido.troco                    | {number}0          |
+      | dadosPedido.versaoApp                | {number}4.5        |
+      | itensPedido[0].marca                 | Fogas              |
+      | itensPedido[0].preco                 | {number}96.0       |
+      | itensPedido[0].produto               | P13                |
+      | itensPedido[0].quantidade            | {number}1          |
+      | itensPedido[0].quilos                | {number}13.0       |
+      | dadosPagamento.formaPagamento        | Pix                |
+      | dadosFidelidade.pontosCompra         | {number}0          |
+      | dadosFidelidade.quilosCompra         | {number}13         |
+      | taxasDesconto.descontoFidelidade     | {number}0          |
+      | taxasDesconto.descontoRevenda        | {number}0.0        |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 400 os dados
+      | [0].errors.message | Revenda não aceita Pix, altere a forma de pagamento |
