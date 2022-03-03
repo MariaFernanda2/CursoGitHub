@@ -6,7 +6,7 @@ Feature: Pedido completo
     Given adiciono o body do tipo "RequestListarRevenda" alterando os dados
       | cliente.bairro      | Vila Buriti          |
       | cliente.cidade      | manaus               |
-      | cliente.idCliente   | {number}335638       |
+      | cliente.idCliente   | {number}335729       |
       | cliente.idEndereco  | {number}327695       |
       | cliente.latitude    | {number}-3.14249561  |
       | cliente.longitude   | {number}-59.95363109 |
@@ -20,7 +20,7 @@ Feature: Pedido completo
 
     Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
       | dadosCliente.clienteSemId            | {bool}false          |
-      | dadosCliente.idCliente               | {number}335638       |
+      | dadosCliente.idCliente               | {number}335729       |
       | dadosCliente.idEndereco              | {number}327695       |
       | dadosCliente.latitude                | {number}-3.14249561  |
       | dadosCliente.longitude               | {number}-59.95363109 |
@@ -63,11 +63,10 @@ Feature: Pedido completo
     And recebo a response com status 200
     And salvo os dados da response
       | VarIdPedido | idPedido |
-#    And espero 60000 milissegundos
 
     And adiciono o body do tipo "RequestItensPedido"
     And adiciono os pathParams
-      | idPedido    | {storage}VarIdPedido |
+      | idPedido | {storage}VarIdPedido |
     And faço um get para "/qa/itens-pedido/{idPedido}"
     And recebo a response com status 200
 
@@ -75,32 +74,15 @@ Feature: Pedido completo
     And adiciono o body do tipo "RequestNotificacoesPedido"
     And faço um get para "/qa/notificacoes/{idPedido}"
     And recebo a response com status 200
+    And limpo o objeto de requisicao
 
     And adiciono o body do tipo "RequestAtualizaPedido"
-    And removo todos os pathParams
+    And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
       | idPedido    | {storage}VarIdPedido |
       | idOrigem    | {number}6            |
       | idPrestador | {number}1334         |
-      | situacao    | Aceito               |
-    And faço um put para "/pedido/atualiza-pedido"
-    And recebo a response com status 200
-
-    And adiciono o body do tipo "RequestAtualizaPedido"
-    And adiciono os queryParams
-      | idPedido1    | {storage}VarIdPedido |
-      | idOrigem1    | {number}6            |
-      | idPrestador1 | {number}1334         |
-      | situacao1    | Acaminho             |
-    And faço um put para "/pedido/atualiza-pedido"
-    And recebo a response com status 200
-
-    And adiciono o body do tipo "RequestAtualizaPedido"
-    And adiciono os queryParams
-      | idPedido2    | {storage}VarIdPedido |
-      | idOrigem2    | {number}6            |
-      | idPrestador2 | {number}1334         |
-      | situacao2    | Concluido            |
+      | situacao    | Concluido            |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
 
@@ -1463,6 +1445,18 @@ Feature: Pedido completo
     And salvo os dados da response
       | VarIdPedido | idPedido |
     And espero 60000 milissegundos
+
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And limpo o objeto de requisicao
+
     And adiciono o body do tipo "RequestAtualizaPedido"
     And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
@@ -1472,6 +1466,76 @@ Feature: Pedido completo
       | situacao    | CanceladoPrestador   |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
+
+  @PedidoCompletoCanceladoPrestador
+  Scenario: Não permitir que o cliente cancele o pedido após o entregador aceitar
+    Given adiciono o body do tipo "RequestPedidoKMS" alterando os dados
+      | dadosCliente.clienteSemId            | {bool}false          |
+      | dadosCliente.idCliente               | {number}335638       |
+      | dadosCliente.idEndereco              | {number}327695       |
+      | dadosCliente.latitude                | {number}-3.14249561  |
+      | dadosCliente.longitude               | {number}-59.95363109 |
+      | dadosCliente.telefoneCliente         | 11942391453          |
+      | dadosCliente.distanciaRevendaCliente | {number}4.3          |
+      | dadosRevenda                         | null                 |
+      | dadosPedido.retiradaNaRevenda        | false                |
+      | dadosPedido.tempoMinimoEntrega       | {number}15           |
+      | dadosPedido.observacao               | Gostei muito         |
+      | dadosPedido.origem                   | {number}6            |
+      | dadosPedido.recebedorPedido          | Ana maia             |
+      | dadosPedido.tempoEstimadoEntrega     | {number}15 - 30      |
+      | dadosPedido.tempoMaximoEntrega       | {number}30           |
+      | dadosPedido.tipoPedido               | PEDIDO_COMPLETO      |
+      | dadosPedido.total                    | {number}216          |
+      | dadosPedido.troco                    | {number}0            |
+      | dadosPedido.versaoApp                | {number}4.5          |
+      | itensPedido[0].marca                 | Fogas                |
+      | itensPedido[0].preco                 | {number}96.0         |
+      | itensPedido[0].produto               | P13                  |
+      | itensPedido[0].quantidade            | {number}1            |
+      | itensPedido[0].quilos                | {number}13.0         |
+      | itensPedido[0].valorVasilhame        | {number}120          |
+      | dadosPagamento.formaPagamento        | Dinheiro             |
+      | dadosFidelidade.pontosCompra         | {number}13           |
+      | dadosFidelidade.quilosCompra         | {number}13           |
+      | taxasDesconto.descontoFidelidade     | {number}0            |
+      | taxasDesconto.taxaEntrega            | {number}0            |
+      | taxasDesconto.descontoRevenda        | {number}0.0          |
+    And utilizo os headers "AUTH_ID"
+    When faço um post para "/pedido/novo/pedido-kms"
+    Then recebo a response com status 200
+    And salvo os dados da response
+      | VarCiphertext | ciphertext |
+    And adiciono o body do tipo "RequestPostPedido" alterando os dados
+      | ciphertext | {storage}VarCiphertext |
+    And utilizo os headers "AUTH_ENUM"
+    And faço um post para "/pedido"
+    And recebo a response com status 200
+    And salvo os dados da response
+      | VarIdPedido | idPedido |
+    And espero 60000 milissegundos
+
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | Aceito               |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 200
+    And limpo o objeto de requisicao
+
+    And adiciono o body do tipo "RequestAtualizaPedido"
+    And utilizo os headers "AUTH_ENUM"
+    And adiciono os queryParams
+      | idPedido    | {storage}VarIdPedido |
+      | idOrigem    | {number}6            |
+      | idPrestador | {number}1276         |
+      | situacao    | CanceladoCliente   |
+    And faço um put para "/pedido/atualiza-pedido"
+    And recebo a response com status 400 os dados
+      | errors[0].message | Não é possível cancelar pedido aceito, entre em contato com a revenda|
 
   @PedidoCompletoPrestadorIndisponivel
   Scenario: Pedido completo prestador indisponivel
@@ -1530,4 +1594,3 @@ Feature: Pedido completo
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 400 os dados
       | errors[0].message | Prestador impossibilitado de aceitar pedido. Encontra-se não disponível. |
-

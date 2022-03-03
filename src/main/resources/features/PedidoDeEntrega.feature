@@ -57,6 +57,8 @@ Feature: Realizar pedidos fogas entrega
       | situacao    | Aceito               |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
+    And limpo o objeto de requisicao
+
     And adiciono o body do tipo "RequestAtualizaPedido"
     And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
@@ -66,6 +68,8 @@ Feature: Realizar pedidos fogas entrega
       | situacao    | Acaminho             |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
+    And limpo o objeto de requisicao
+
     And adiciono o body do tipo "RequestAtualizaPedido"
     And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
@@ -1704,6 +1708,8 @@ Feature: Realizar pedidos fogas entrega
       | situacao    | Aceito               |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
+    And limpo o objeto de requisicao
+
     And adiciono o body do tipo "RequestAtualizaPedido"
     And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
@@ -1713,6 +1719,8 @@ Feature: Realizar pedidos fogas entrega
       | situacao    | Acaminho             |
     And faço um put para "/pedido/atualiza-pedido"
     And recebo a response com status 200
+    And limpo o objeto de requisicao
+
     And adiciono o body do tipo "RequestAtualizaPedido"
     And utilizo os headers "AUTH_ENUM"
     And adiciono os queryParams
